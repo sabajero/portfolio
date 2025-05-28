@@ -1,16 +1,36 @@
 ---
-
+// You can add frontmatter here later, but for now, keep it simple.
 ---
-
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Artist Portfolio</title>
+    <link rel="stylesheet" href="/styles/global.css"> </head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/design">Design</a></li>
+                <li><a href="/about">About Me</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="home-hero">
+            <img src="/images/your-profile-picture.jpg" alt="Your Name" class="profile-pic">
+            <h1>Jerónimo Gutiérrez Balanta.</h1>
+            <p>
+                Cali, Colombia, 1999. I'm an artist and designer that lately have been asking questions around illness, body, family archives, workers conditions and outsourcing infrastructures, reflecting on this through drawing, publications, sound and performance. Currently based in Bremen, Germany.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        </footer>
+</body>
 </html>
