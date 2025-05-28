@@ -1,0 +1,73 @@
+/* Basic Reset & Body Styles */
+body {
+    font-family: "DotGothic16", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Header & Navigation */
+header {
+    background-color: #ffffff;
+    padding: 1rem 0;
+    text-align: left;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: right;
+    gap: 1.5rem;
+}
+
+nav a {
+    color: #000000; /* Accent color */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #43f166;
+}
+
+/* Homepage Hero */
+.home-hero {
+    text-align: start;
+    padding: 0rem 1rem;
+}
+
+.home-hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+
+img { /* NEW rule for images inside home-hero */
+    max-width: 100%; /* Ensures image doesn't overflow on small screens */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes extra space below image */
+    margin: 0 auto 2rem; /* Centers the image and adds bottom margin */
+}
+
+
+.profile-pic {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: left;
+    border: 0px solid #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+
+

@@ -1,23 +1,24 @@
 ---
-// You can add frontmatter here later, but for now, keep it simple.
+// This is Astro's Frontmatter for JavaScript imports/exports
+// Astro automatically makes props available from frontmatter of markdown files
+const { frontmatter } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Portfolio</title>
-        <link rel="stylesheet" href="/styles/global.css">
+        <title>{frontmatter.title} - Jerónimo Gutiérrez Balanta</title>
+        <link rel="stylesheet" href="/styles/global.css"> 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     </head>
+
 <body>
     <header>
-		<h1>Jerónimo Gutiérrez Balanta</h1>
         <nav>
             <ul>
-				
                 <li><a href="/">Home</a></li>
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/design">Design</a></li>
@@ -27,16 +28,17 @@
     </header>
 
     <main>
-        <section class="home-hero">
-            <p>
-                Cali, Colombia, 1999. I'm an artist and designer that lately have been asking questions around illness, body, family archives, workers conditions and outsourcing infrastructures, reflecting on this through drawing, publications, sound and performance. Currently based in Bremen, Germany.
-            </p>
-			<img src="/images/homepage-pic.png" alt="DAMN">
-        </section>
+        <article class="project-detail">
+            
+
+            <slot />
+
+            <a href="/projects" class="back-to-projects">&lt; Back to all Projects</a>
+        </article>
     </main>
 
     <footer>
-            <p>&copy; 2025 Jerónimo Gutiérrez Balanta. All rights reserved.</p>
+        <p>&copy; 2025 Jerónimo Gutiérrez Balanta. All rights reserved.</p>
     </footer>
 </body>
 </html>

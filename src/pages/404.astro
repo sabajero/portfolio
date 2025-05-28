@@ -1,0 +1,57 @@
+---
+// Simple 404 page
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="/styles/global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the 404 message */
+        body {
+            /* Ensures the body takes full viewport height for centering */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Allows content to stack and push footer down if there was one */
+            justify-content: center; /* Vertically centers the main content */
+            align-items: center; /* Horizontally centers the main content */
+        }
+
+        .message-box {
+            text-align: center;
+            padding: 2rem;
+            /* background-color: rgba(0, 0, 0, 0.5); */ /* Optional: a subtle transparent background */
+            border-radius: 8px;
+            color: #000000; /* Ensure text is visible against dark background */
+            font-size: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .message-box a {
+            color: #40ef36; /* Your accent color for the link */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.8s ease;
+        }
+
+        .message-box a:hover {
+            color: #bfff35; /* White on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <p>oops! still building around here...</p>
+        <p><a href="/">come back later!</a></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Jerónimo Gutiérrez Balanta. All rights reserved.</p>
+</footer>
+</body>
+</html>
