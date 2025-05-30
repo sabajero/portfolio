@@ -1,0 +1,1 @@
+Archive is passages, it's my life and death, in multiple forms, it's personal to the heart but aim to be read by the world, it's something I'm building for me, a version of my pasts.

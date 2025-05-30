@@ -1,42 +1,55 @@
 ---
-// You can add frontmatter here later, but for now, keep it simple.
+// src/pages/index.astro
+// All Astro frontmatter (imports, etc.) goes at the very top.
+import ThreeDScene from '../components/ThreeDScene.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Portfolio</title>
+        <title>Sabajero Portfolio</title>
         <link rel="stylesheet" href="/styles/global.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+        <style>
+            /* Adjust body to ensure the Three.js canvas fills the screen */
+            body {
+                margin: 0;
+                overflow: hidden; /* Hide scrollbars if canvas overfills */
+            }
+
+            /* IMPORTANT: These rules currently hide your header and footer */
+            /* If you want your header/footer to appear *on top* of the 3D scene, */
+            /* you'll need to remove or modify these 'display: none;' rules */
+            /* and use CSS positioning (e.g., position: fixed; z-index: higher;) */
+            /* For now, we are hiding them to confirm the 3D scene works full-screen. */
+            header, footer {
+                display: none;
+            }
+        </style>
     </head>
-<body>
-    <header>
-		<h1>Jerónimo Gutiérrez Balanta</h1>
-        <nav>
-            <ul>
-				
-                <li><a href="/">Home</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/design">Design</a></li>
-                <li><a href="/about">About Me</a></li>
-            </ul>
-        </nav>
-    </header>
+    <body>
+        <header class="main-header">
+            <div class="header-content">
+                <h1 class="site-title"><a href="/">Sabajero</a></h1>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/projects">Projects</a></li>
+                        <li><a href="/design">Design</a></li>
+                        <li><a href="/about">About Me</a></li>
+                        <li><a href="/archive">Archive</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-    <main>
-        <section class="home-hero">
-            <p>
-                Cali, Colombia, 1999. I'm an artist and designer that lately have been asking questions around illness, body, family archives, workers conditions and outsourcing infrastructures, reflecting on this through drawing, publications, sound and performance. Currently based in Bremen, Germany.
-            </p>
-			<img src="/images/homepage-pic.png" alt="DAMN">
-        </section>
-    </main>
+        <ThreeDScene client:load />
 
-    <footer>
+        <footer>
             <p>&copy; 2025 Jerónimo Gutiérrez Balanta. All rights reserved.</p>
-    </footer>
-</body>
+        </footer>
+    </body>
 </html>

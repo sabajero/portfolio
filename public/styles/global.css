@@ -35,6 +35,10 @@ nav a {
     transition: color 0.3s ease;
 }
 
+text-highlight-accent {
+    color: #0000ff; /* Your accent color */
+}
+
 nav a:hover {
     color: #43f166;
 }
@@ -68,6 +72,4 @@ img { /* NEW rule for images inside home-hero */
     border: 0px solid #ffffff;
     margin-bottom: 1.5rem;
 }
-
-
 

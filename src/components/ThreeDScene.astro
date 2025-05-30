@@ -1,0 +1,181 @@
+---
+// src/components/ThreeDScene.astro
+---
+<div id="three-container" style="width: 100%; height: 100vh; overflow: hidden; position: relative;"></div>
+
+<script type="module">
+
+    import * as THREE from '/node_modules/three/build/three.module.js';
+    import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+    const container = document.getElementById('three-container');
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1a1a1a); // Your primary background color
+
+
+    // CAMERA 
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 4; // Move camera further back to see larger orbit
+    camera.position.y = 2; // Slight vertical offset for better 3D perspective
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // INIT ORBIT CONTROLS ---
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // Give a sense of weight
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false; // Prevents panning if you only want rotation
+    controls.maxPolarAngle = Math.PI / 2; // Restrict vertical orbit (optional: prevents camera from going below the plane)
+
+
+    // HOMEPAGE > SECTION DATA ---
+    const sectionData = [
+        { name: 'Home', link: '/', radius: 1, angle: Math.PI * 0, color: 0x2ecc71 }, // Green
+        { name: 'Projects', link: '/projects', radius: 2.5, angle: Math.PI * 0.5, color: 0x2ecc71 }, // Green
+        { name: 'Design', link: '/design', radius: 3, angle: Math.PI * 1, color: 0x2ecc71 }, // Green
+        { name: 'About Me', link: '/about', radius: 4, angle: Math.PI * 1.5, color: 0x2ecc71 }, // Green
+    ];
+
+    // HOMEPAGE > STORE REFERENCES FOR DOTS ---
+    const sectionDots = [];
+    const DOT_SIZE = 0.1; // SECTION DOTS SIZE
+     // --- TRAIL CONSTANTS ---
+    const MAX_TRAIL_POINTS = 50; // How many segments the trail should have (length)
+    const TRAIL_ALPHA_DECAY = 0.95; // How fast the trail fades (closer to 1 means slower fade)
+    const TRAIL_THICKNESS = 0.03; // Visual thickness of the trail (approximate)
+
+
+    // --- NEW: Create a central point (like a subtle sun) ---
+    const centralGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+    const centralMaterial = new THREE.MeshBasicMaterial({ color: 0x000ff }); // Your accent color
+    const centralPoint = new THREE.Mesh(centralGeometry, centralMaterial);
+    scene.add(centralPoint);
+
+
+    // --- NEW: Create and position each section dot ---
+    sectionData.forEach(data => {
+        const geometry = new THREE.SphereGeometry(DOT_SIZE, 32, 32); // Sphere for the dot
+        const material = new THREE.MeshBasicMaterial({ color: data.color }); // Dot's color
+        const dot = new THREE.Mesh(geometry, material);
+
+        // Calculate initial position in a circle
+        dot.position.x = Math.cos(data.angle) * data.radius;
+        dot.position.z = Math.sin(data.angle) * data.radius;
+        dot.position.y = 0; // Keep them on a flat plane for now
+
+        // Store data with the dot for later use (e.g., interaction)
+        dot.userData = {
+            name: data.name,
+            link: data.link,
+            originalAngle: data.angle, // Store original angle for individual rotation
+            radius: data.radius 
+        };
+
+        scene.add(dot);
+        sectionDots.push(dot); // Add to our array for animation
+
+        // --- INIT TRAIL  LOGIC ---
+        const trailMaterial = new THREE.LineBasicMaterial({
+            color: 0xffffff, // TRAIL COLOR
+            transparent: true,
+            vertexColors: true, // Allow per-vertex color/alpha
+            blending: THREE.AdditiveBlending // Optional: Makes trails look glowing when overlapping
+        });
+
+        const trailGeometry = new THREE.BufferGeometry();
+        // Initialize position and color attributes for the maximum number of points
+        // Positions are 3 components per point (x, y, z)
+        const positions = new Float32Array(MAX_TRAIL_POINTS * 3);
+        // Colors are 4 components per point (r, g, b, a)
+        const colors = new Float32Array(MAX_TRAIL_POINTS * 4);
+
+        trailGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
+        trailGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 4).setUsage(THREE.DynamicDrawUsage));
+
+        const trailLine = new THREE.Line(trailGeometry, trailMaterial);
+        scene.add(trailLine);
+
+        // Store trail data in dot's userData
+        dot.userData.trailPoints = []; // Array to hold current positions
+        dot.userData.trailColors = []; // Array to hold current colors (for alpha)
+        dot.userData.trailLine = trailLine; // Reference to the actual Three.js line object
+    });
+
+// --- Animation Loop ---
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // --- IMPORTANT: Update OrbitControls in each frame ---
+        controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
+
+        // --- UPDATED: Make dots orbit and update their trails ---
+        const orbitSpeedMultiplier = 0.005; // Keep this slow for initial trail visibility, then adjust
+        sectionDots.forEach(dot => {
+            // 1. Update individual dot's orbit
+            dot.userData.originalAngle += orbitSpeedMultiplier / dot.userData.radius;
+            dot.position.x = Math.cos(dot.userData.originalAngle) * dot.userData.radius;
+            dot.position.z = Math.sin(dot.userData.originalAngle) * dot.userData.radius;
+
+            // 2. Update Trail Points
+            const trailPoints = dot.userData.trailPoints;
+            const trailColors = dot.userData.trailColors;
+            const trailLine = dot.userData.trailLine;
+
+            // Add current position to trail
+            trailPoints.push(new THREE.Vector3(dot.position.x, dot.position.y, dot.position.z));
+            // Add initial color for the new point (dot's color, full alpha)
+            const dotColor = new THREE.Color(dot.material.color);
+            trailColors.push(dotColor.r, dotColor.g, dotColor.b, 1.0); // Full alpha for the newest point
+
+            // Remove oldest point if trail is too long
+            while (trailPoints.length > MAX_TRAIL_POINTS) {
+                trailPoints.shift(); // Remove the oldest point
+                trailColors.splice(0, 4); // Remove its color (r,g,b,a)
+            }
+
+            // Update positions and colors in the BufferGeometry
+            const positionsArray = trailLine.geometry.attributes.position.array;
+            const colorsArray = trailLine.geometry.attributes.color.array;
+
+            // Populate attributes with current trail data and apply fade
+            for (let i = 0; i < trailPoints.length; i++) {
+                const point = trailPoints[i];
+                positionsArray[i * 3] = point.x;
+                positionsArray[i * 3 + 1] = point.y;
+                positionsArray[i * 3 + 2] = point.z;
+
+                // Apply alpha decay (fade effect)
+                const originalAlpha = trailColors[i * 4 + 3];
+                const newAlpha = originalAlpha * Math.pow(TRAIL_ALPHA_DECAY, trailPoints.length - 1 - i); // Older points fade more
+                colorsArray[i * 4] = trailColors[i * 4];
+                colorsArray[i * 4 + 1] = trailColors[i * 4 + 1];
+                colorsArray[i * 4 + 2] = trailColors[i * 4 + 2];
+                colorsArray[i * 4 + 3] = newAlpha; // Set fading alpha
+            }
+
+            // Set draw range to only draw the actual points in the trail
+            trailLine.geometry.setDrawRange(0, trailPoints.length);
+
+            // Inform Three.js that the attributes need updating
+            trailLine.geometry.attributes.position.needsUpdate = true;
+            trailLine.geometry.attributes.color.needsUpdate = true;
+        }); // <-- THIS IS THE ONLY CLOSING PAREN/BRACE FOR THE forEach LOOP!
+
+        renderer.render(scene, camera);
+    }
+
+    // Handle window resizing
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', onWindowResize);
+
+    // Start the animation
+    animate();
+</script>
