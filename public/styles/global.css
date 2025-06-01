@@ -1,4 +1,6 @@
 /* Basic Reset & Body Styles */
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
 body {
     font-family: "DotGothic16", sans-serif;
     font-weight: 400;
@@ -73,3 +75,25 @@ img { /* NEW rule for images inside home-hero */
     margin-bottom: 1.5rem;
 }
 
+/* Three.js Dot Labels */
+.three-dot-label {
+    color: #0000ff;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 12px;
+    background: rgba(0, 0, 0, 0.0);
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 0px 0px rgb(255, 255, 255);
+    opacity: 1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.three-dot-label:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.05);
+}
