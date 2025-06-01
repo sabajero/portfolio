@@ -89,7 +89,7 @@ img { /* NEW rule for images inside home-hero */
     user-select: none;
     box-shadow: 0 0px 0px rgb(255, 255, 255);
     opacity: 1;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid (#ffffff);
     transition: all 0.3s ease; /* Smooth transitions */
 }
 
