@@ -77,9 +77,9 @@ img { /* NEW rule for images inside home-hero */
 
 /* Three.js Dot Labels */
 .three-dot-label {
-    color: #daff37;
+    color: #000000;
     font-family: 'DotGothic16', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     padding: 12px 12px;
     background: rgba(0, 0, 0, 0.0);
@@ -89,13 +89,13 @@ img { /* NEW rule for images inside home-hero */
     user-select: none;
     box-shadow: 0 0px 0px rgb(255, 255, 255);
     opacity: 1;
-    border: 1px solid (#ffffff);
+    border: 5px solid (#000000);
     transition: all 0.3s ease; /* Smooth transitions */
 }
 
 .three-project-label {
   font-family: 'DotGothic16', monospace;
-  color: #ffffff;
+  color: #000000;
   background: rgba(0, 0, 0, 0);
   padding: 3px 6px;
   border-radius: 0px;
@@ -105,10 +105,12 @@ img { /* NEW rule for images inside home-hero */
   border: 0px solid #ffffff;
   box-shadow: 0 0px 0px rgba(0,0,0,0.2);
   white-space: nowrap;
-  color: rgb(255, 255, 255);
-}
+  color: #616060;}
 
 .three-dot-label:hover {
     background: rgba(0, 0, 0, 0.9);
     transform: scale(1.05);
 }
+
+/* colors I like
+#daff37 Lime Green I like almost neon
