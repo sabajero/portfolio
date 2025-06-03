@@ -25,7 +25,7 @@
     }
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = new THREE.Color(0x191919);
 
     // CAMERA
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -58,10 +58,10 @@
 
     // HOMEPAGE > SECTION DATA
     const sectionData = [
-        { name: 'Home', link: '/', radius: 3, angle: Math.PI * 0, color: 0x2ecc71 },
-        { name: 'Projects', link: '/projects', radius: 7, angle: Math.PI * 0.5, color: 0x2ecc71 },
-        { name: 'Design', link: '/design', radius: 10, angle: Math.PI * 1, color: 0x2ecc71 },
-        { name: 'About Me', link: '/about', radius: 15, angle: Math.PI * 1.5, color: 0x2ecc71 },
+        { name: 'Home', link: '/', radius: 3, angle: Math.PI * 0, color: 0xa49cff },
+        { name: 'Projects', link: '/projects', radius: 20, angle: Math.PI * 4, color: 0xa49cff },
+        { name: 'Design', link: '/design', radius: 10, angle: Math.PI * 1, color: 0xa49cff },
+        { name: 'About Me', link: '/about', radius: 15, angle: Math.PI * 1.5, color: 0xa49cff },
         { name: 'Archive', link: '/archive', radius: 20, angle: Math.PI * 5, color: 0xF0E68C },
     ];
 
@@ -72,6 +72,7 @@
         { id: 'project-3', title: 'Pandemica', year: 2022, imageUrl: '/images/projects/project3-icon.png', linkToMarkdown: '/projects/ecommerce-redesign' },
         { id: 'project-4', title: 'Noctambulas Permanentes', year: 2020, imageUrl: '/images/projects/project4-icon.png', linkToMarkdown: '/projects/mobile-app' },
         { id: 'project-5', title: 'Ahora sin cielo abierto', year: 2020, imageUrl: '/images/projects/project5-icon.png', linkToMarkdown: '/projects/brand-identity' },
+        { id: 'comadre', title: 'Que no le pase Comadre!', year: 2022, imageUrl: '/images/projects/project5-icon.png', linkToMarkdown: 'pages/projects/comadre' },
     ];
 
     // STORE REFERENCES FOR DOTS - with proper typing
@@ -82,11 +83,11 @@
     let projectsMainDot: THREE.Mesh | null = null;
 
     // TRAIL VARIABLES
-    const MAX_TRAIL_POINTS = 1000;
+    const MAX_TRAIL_POINTS = 200;
 
     // GRAVITATION POINT
     const centralGeometry = new THREE.SphereGeometry(0.6, 32, 32);
-    const centralMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    const centralMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
     const centralPoint = new THREE.Mesh(centralGeometry, centralMaterial);
     scene.add(centralPoint);
 
@@ -100,7 +101,7 @@
     //
 
     const intersectionMarkerGeometry = new THREE.SphereGeometry(0.1, 8, 8);
-    const intersectionMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    const intersectionMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     let currentIntersectionMarker: THREE.Mesh | null = null;
     // --- END DEBUG VISUALIZERS ---
 
@@ -161,7 +162,7 @@
         requestAnimationFrame(animate);
         controls.update();
 
-        const orbitSpeedMultiplier = 0.090;
+        const orbitSpeedMultiplier = 0.010;
         const projectOrbitSpeedMultiplier = 0.030; // Slower orbit for project dots
 
         // Update main section dots
@@ -338,9 +339,9 @@
             lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
 
             const lineMaterial = new THREE.LineBasicMaterial({
-                color: 0x444444,
-                opacity: 0.2,
-                transparent: true
+                color: 0xffffff,
+                opacity: 1,
+                transparent: true,
             });
             const connectionLine = new THREE.Line(lineGeometry, lineMaterial);
 

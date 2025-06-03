@@ -77,7 +77,7 @@ img { /* NEW rule for images inside home-hero */
 
 /* Three.js Dot Labels */
 .three-dot-label {
-    color: #0000ff;
+    color: #daff37;
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -95,17 +95,17 @@ img { /* NEW rule for images inside home-hero */
 
 .three-project-label {
   font-family: 'DotGothic16', monospace;
-  color: #2c3e50;
-  background: rgba(52, 152, 219, 0.9);
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0);
   padding: 3px 6px;
-  border-radius: 3px;
+  border-radius: 0px;
   font-size: 12px;
   font-weight: normal;
   pointer-events: none;
-  border: 1px solid #3498db;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  border: 0px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0,0,0,0.2);
   white-space: nowrap;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .three-dot-label:hover {
